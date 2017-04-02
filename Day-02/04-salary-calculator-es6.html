@@ -133,9 +133,19 @@
 				, document.getElementById("react-content"));
 
 		}
-		renderApp();
+		//renderApp();
 		calculator.onChange(renderApp);
 		
+		function displayList(){
+			var products = ['Pen', 'Pencil', 'Marker'];
+			var productList = products.map(product => (<li>{product}</li>));
+			var olProduct = (
+				<ol>
+					{productList}
+				</ol>
+			)
+			ReactDOM.render(<div>{olProduct}</div>, document.getElementById("react-content"));
+		}
 		
 	</script>
 
