@@ -107,7 +107,11 @@
 					<div>
 						<BugStats bugs={bugs}></BugStats>
 						<BugEdit onAddNew={this.addNew.bind(this)}></BugEdit>
-						<BugList bugs={bugs}></BugList>
+						<BugList 
+							bugs={bugs} 
+							onRemoveClosed={this.removeClosed.bind(this)}
+							onToggle={this.toggle.bind(this)}
+						></BugList>
 					</div>
 				)
 			}
@@ -145,11 +149,11 @@
 
 		class BugList extends React.Component{
 			onRemoveClosedClick(){
-				console.log('remove closed clicked');
+				this.props.onRemoveClosed();
 			}
 			render(){
 				var bugs = this.props.bugs;
-				var bugItems = bugs.map(bug => (<BugItem bug={bug}></BugItem>));
+				var bugItems = bugs.map(bug => (<BugItem bug={bug} onToggle={this.props.onToggle}></BugItem>));
 				return(
 					<section className="list">
 						<ol>
@@ -162,8 +166,8 @@
 		}
 
 		class BugItem extends React.Component{
-			toggle(){
-				console.log('an existing bug to be toggled');
+			toggle(bug){
+				this.props.onToggle(bug);
 			}
 			render(){
 				var bug = this.props.bug;
