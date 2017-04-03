@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Counter [Redux]</title>
+	<script src="babel.min.js"></script>
+	<script src="react.js"></script>
+	<script src="react-dom.js"></script>
+	<script src="Redux.js"></script>
+	<script type="text/babel">
+		function bugsReducer(currentState = [], action){
+			switch(action.type){
+				case 'ADD_NEW':
+					var bugName = action.payload;
+					var maxId = currentState.length ? currentState.reduce((result, bug) => result > bug.id ? result : bug.id, 0) + 1 : 1;
+					var newBug = {
+						id : maxId,
+						name : bugName,
+						isClosed : false,
+						createdAt : new Date()
+					};
+					return currentState.concat([newBug]);
+
+				case 'TOGGLE':
+					var bugToToggle = action.payload;
+					return currentState.map(bug => 
+						bug === bugToToggle ? Object.assign({}, bugToToggle, {isClosed : !bugToToggle.isClosed}) : bug
+					);
+				case 'REMOVE_CLOSED':
+					return currentState.filter(bug => !bug.isClosed);
+				default:
+					return currentState;
+			}
+		}
+
+
+		var store = Redux.createStore(bugsReducer);
+		store.subscribe(renderApp)
+		function renderApp(){
+			console.table(store.getState());	
+		}
+		renderApp();
+
+		//utility functions
+		function getNewBugAction(bugName){
+		    return { type : 'ADD_NEW', payload : bugName }
+		}
+		function getToggleAction(bug){
+		   return { type : 'TOGGLE', payload : bug }
+		}
+		function getRemoveClosedAction(){
+			return { type : 'REMOVE_CLOSED'}
+		}
+	</script>
+</head>
+<body>
+	<div id="content"></div>
+</body>
+</html>

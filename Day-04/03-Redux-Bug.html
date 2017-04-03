@@ -12,8 +12,11 @@
 			switch(action.type){
 				case 'TOGGLE':
 					var bug = action.payload;
-					bug.isClosed = !bug.isClosed;
-					return bug;
+					return {
+						name : bug.name,
+						isClosed : !bug.isClosed,
+						createdAt : bug.createdAt
+					};
 				default:
 					return {name : 'A dummy bug', isClosed : false, createdAt : new Date()}
 			}
