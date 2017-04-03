@@ -7,7 +7,8 @@
 	<script src="babel.min.js"></script>
 	<script src="react.js"></script>
 	<script src="react-dom.js"></script>
-	<script src="Redux.js"></script>
+	<script src="real-redux.js"></script>
+	<script src="react-redux.js"></script>
 	<script type="text/babel">
 		function bugsReducer(currentState = [], action){
 			switch(action.type){
@@ -37,15 +38,16 @@
 		class BugTracker extends React.Component{
 			
 			render(){
-				var bugs = this.props.model;
+				console.log(this.props);
+				var bugs = this.props.bugs;
 				return (
 					<div>
 						<BugStats bugs={bugs}></BugStats>
-						<BugEdit onAddNew={this.props.actions.addNew}></BugEdit>
+						<BugEdit onAddNew={this.props.addNew}></BugEdit>
 						<BugList 
 							bugs={bugs} 
-							onRemoveClosed={this.props.actions.removeClosed}
-							onToggle={this.props.actions.toggle}
+							onRemoveClosed={this.props.removeClosed}
+							onToggle={this.props.toggle}
 						></BugList>
 					</div>
 				)
@@ -117,31 +119,40 @@
 		}
 
 		var store = Redux.createStore(bugsReducer);
-		store.subscribe(renderApp);
-		//utility functions
-		function getNewBugAction(bugName){
-		    return { type : 'ADD_NEW', payload : bugName }
-		}
-		function getToggleAction(bug){
-		   return { type : 'TOGGLE', payload : bug }
-		}
-		function getRemoveClosedAction(){
-			return { type : 'REMOVE_CLOSED'}
-		}
-
-		function getDispatcher(dispatch, actionCreator){
-			return function(){
-				dispatch(actionCreator.apply(this, arguments));
+		
+		
+		function mapStateToProps(state){
+			return {
+				bugs : state
 			}
 		}
+		function getBugActionCreators(){
+			return {
+				addNew : function getNewBugAction(bugName){
+				    return { type : 'ADD_NEW', payload : bugName };
+				},
+				toggle : function getToggleAction(bug){
+				   return { type : 'TOGGLE', payload : bug };
+				},
+				removeClosed : function getRemoveClosedAction(){
+					return { type : 'REMOVE_CLOSED'};
+				}
+			};
+		}
 
-		var actions = {
-			addNew : getDispatcher(store.dispatch, getNewBugAction),
-			toggle : getDispatcher(store.dispatch, getToggleAction),
-			removeClosed : getDispatcher(store.dispatch, getRemoveClosedAction)
-		};
+		function mapDispatchToProps(dispatch){
+			return Redux.bindActionCreators(getBugActionCreators(), dispatch);	
+		}
+		var ConnectedBugTracker = ReactRedux.connect(mapStateToProps, mapDispatchToProps)(BugTracker);
+
+		var Provider = ReactRedux.Provider;
+		
 		function renderApp(){
-			ReactDOM.render(<BugTracker model={store.getState()} actions={actions}></BugTracker>, document.getElementById("content"));
+			ReactDOM.render(
+				<Provider store={store}>
+					<ConnectedBugTracker></ConnectedBugTracker>
+				</Provider>, document.getElementById("content"));
+
 		}
 		renderApp();
 
