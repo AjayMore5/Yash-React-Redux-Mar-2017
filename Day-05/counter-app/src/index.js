@@ -9,7 +9,6 @@ import combinedReducers from './reducers';
 import { Provider } from 'react-redux';
 
 
-
 var store = createStore(combinedReducers);
 
 ReactDOM.render(

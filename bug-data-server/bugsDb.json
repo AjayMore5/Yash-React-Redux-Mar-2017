@@ -1,0 +1,44 @@
+{
+  "bugs": [
+    {
+      "id": 4,
+      "name": "Routing error",
+      "isClosed": false,
+      "createdAt": "2017-02-25T11:23:16.380Z"
+    },
+    {
+      "id": 5,
+      "name": "Unable to add a new bug",
+      "isClosed": false,
+      "createdAt": "2017-03-22T10:34:32.520Z"
+    },
+    {
+      "id": 6,
+      "name": "This is another bug for server comm",
+      "isClosed": false,
+      "createdAt": "2017-04-01T12:27:29.801Z"
+    },
+    {
+      "id": 7,
+      "name": "just a fancy bug",
+      "isClosed": false,
+      "createdAt": "2017-04-04T10:52:07.839Z"
+    },
+    {
+      "id": 8,
+      "name": "User actions not recognized",
+      "isClosed": false,
+      "createdAt": "2017-04-04T10:53:01.282Z"
+    }
+  ],
+  "employees": [
+    {
+      "id": 1,
+      "name": "Magesh"
+    },
+    {
+      "id": 2,
+      "name": "Suresh"
+    }
+  ]
+}
