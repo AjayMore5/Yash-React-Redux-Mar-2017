@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import Counter from './counter/Counter';
+import BugTracker from './bugTracker/BugTracker';
 
 class App extends Component {
   render() {
@@ -13,7 +14,8 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <Counter className="App-intro" counterData="10"></Counter>
-       
+        <hr/>
+        <BugTracker></BugTracker>
       </div>
     );
   }

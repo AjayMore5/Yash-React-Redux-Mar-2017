@@ -1,26 +1,20 @@
 import React , { Component } from 'react';
 import { connect } from 'react-redux';
 
-class Counter extends Component{
-	onIncrementClick(){
-		this.props.dispatch({type : 'INCREMENT'});
-	}
-	onDecrementClick(){
-		this.props.dispatch({type : 'DECREMENT'});
-	}
-	render(){
-		return(
-			<div>
-				<input type="button" value="Increment" onClick={this.onIncrementClick.bind(this)}/>
-				<span> {this.props.counterData} </span>
-				<input type="button" value="Decrement" onClick={this.onDecrementClick.bind(this)}/>
-			</div>
-		)
-	}
+
+function Counter({counterData, dispatch}){
+	return(
+		<div>
+			<input type="button" value="Increment" onClick={() => dispatch({type : 'INCREMENT'})}/>
+			<span> {counterData} </span>
+			<input type="button" value="Decrement" onClick={() => dispatch({type : 'DECREMENT'})}/>
+		</div>
+	)
 }
+
 function mapStateToProps(state){
 	return {
-		counterData : state	
+		counterData : state.counterData	
 	}
 }
 
